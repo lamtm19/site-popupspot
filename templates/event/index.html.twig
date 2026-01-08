@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Événements - Pop Up Spot{% endblock %}
+
+{% block body %}
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold">Événements</h1>
+
+        {% if app.user %}
+            <a class="px-4 py-2 rounded bg-black text-white" href="{{ path('app_event_new') }}">
+                Poster un événement
+            </a>
+        {% else %}
+            <a class="px-4 py-2 rounded bg-black text-white" href="{{ path('app_login') }}">
+                Se connecter pour poster
+            </a>
+        {% endif %}
+    </div>
+
+    {% if events is empty %}
+        <p class="text-gray-700">Aucun événement à venir pour le moment.</p>
+    {% else %}
+        <div class="grid gap-4">
+            {% for e in events %}
+                <a class="block border rounded bg-white p-4 hover:shadow"
+                   href="{{ path('app_event_show', {id: e.id}) }}">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="font-semibold">{{ e.title }}</p>
+                            <p class="text-sm text-gray-600">
+                                {{ e.city }} ({{ e.zipcode }}) — {{ e.region }} — {{ e.country }}
+                            </p>
+                        </div>
+                        <p class="text-sm font-medium">
+                            {{ e.eventDate|date('d/m/Y H:i') }}
+                        </p>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

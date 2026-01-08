@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil - Pop Up Spot{% endblock %}
+
+{% block body %}
+    <h1 class="text-2xl font-bold mb-4">Mon profil</h1>
+
+    {% for key, array in app.flashes %}
+        {% for message in array %}
+            <p class="mb-4 p-3 border rounded bg-white"><strong>{{ key|upper }}</strong> : {{ message }}</p>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="border rounded bg-white p-6 flex gap-6 items-start">
+        {% if app.user.photo %}
+            <img class="w-24 h-24 rounded-full object-cover border" src="{{ app.user.photo }}" alt="Photo profil">
+        {% else %}
+            <div class="w-24 h-24 rounded-full border flex items-center justify-center text-sm text-gray-500">
+                No photo
+            </div>
+        {% endif %}
+
+        <div class="flex-1">
+            <p><strong>Email :</strong> {{ app.user.email }}</p>
+            <p class="mt-1"><strong>Pseudo :</strong> {{ app.user.pseudo }}</p>
+
+            <div class="flex flex-wrap gap-3 mt-5">
+                <a class="px-4 py-2 rounded bg-black text-white" href="{{ path('app_profile_edit') }}">
+                    Modifier mon profil
+                </a>
+
+                <a class="px-4 py-2 rounded border" href="{{ path('app_my_events') }}">
+                    Mes événements
+                </a>
+
+                <a class="px-4 py-2 rounded border text-red-700" href="{{ path('app_profile_delete') }}"
+                   onclick="return confirm('Supprimer ton compte ?');">
+                    Supprimer mon compte
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
