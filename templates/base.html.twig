@@ -9,7 +9,7 @@
     {% endblock %}
 </head>
 
-<body class="min-h-screen">
+<body class="min-h-screen flex flex-col">
     <nav class="flex gap-6 items-center p-4 border-b">
         <a class="font-bold" href="{{ path('app_home') }}">Pop Up Spot</a>
 
@@ -35,17 +35,17 @@
 
     </nav>
 
-    <main class="p-6">
+    <main class="flex-grow">
         {% block body %}{% endblock %}
     </main>
 </body>
 
-<footer class="mt-10 border-t pt-6 text-sm flex flex-wrap gap-4">
-  <a class="underline" href="{{ path('app_mentions') }}">Mentions légales</a>
-  <a class="underline" href="{{ path('app_cgu') }}">CGU</a>
-  <a class="underline" href="{{ path('app_cgv') }}">CGV</a>
-  <a class="underline" href="{{ path('app_privacy') }}">Confidentialité</a>
-  <a class="underline" href="{{ path('app_about') }}">Qui sommes-nous ?</a>
+<footer class="bg-gray-900 text-gray-300 text-sm text-center py-4">
+  <a class="hover:underline" href="{{ path('app_mentions') }}">Mentions légales</a>
+  <a class="hover:underline" href="{{ path('app_cgu') }}">CGU</a>
+  <a class="hover:underline" href="{{ path('app_cgv') }}">CGV</a>
+  <a class="hover:underline" href="{{ path('app_privacy') }}">Confidentialité</a>
+  <a class="hover:underline" href="{{ path('app_about') }}">Qui sommes-nous ?</a>
   <a class="hover:underline" href="{{ path('app_contact') }}">Contact</a>
 </footer>
 
