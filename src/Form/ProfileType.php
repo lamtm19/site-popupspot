@@ -12,10 +12,11 @@ class ProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('pseudo')
+        ->add('pseudo', null, ['label' => 'Pseudo'])
         ->add('photo', null, [
             'required' => false,
             'help' => 'Colle une URL d’image (photo de profil).',
+            'label' => 'Photo de profil (URL)',
         ])
     ;
     }

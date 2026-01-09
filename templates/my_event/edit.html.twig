@@ -1,16 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier événement - Pop Up Spot{% endblock %}
+{% block title %}Modifier l’événement - Pop Up Spot{% endblock %}
 
 {% block body %}
-    <h1 class="text-2xl font-bold mb-4">Modifier : {{ event.title }}</h1>
+<div class="min-h-screen flex items-center justify-center bg-white">
+    <div class="w-full max-w-xl border border-gray-200 rounded-xl p-8 shadow-sm">
 
-    <div class="border rounded bg-white p-6">
+        <h1 class="text-2xl font-semibold text-center mb-6">Modifier l’événement</h1>
+
         {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button class="mt-4 px-4 py-2 rounded bg-black text-white" type="submit">
-                Enregistrer (revalidation admin)
+
+            {% if form_errors(form) %}
+                <div class="mb-4 text-sm text-red-600 text-center">
+                    {{ form_errors(form) }}
+                </div>
+            {% endif %}
+
+            <div class="space-y-4">
+                {# On affiche tous les champs avec le même style, sauf _token #}
+                {% for field in form %}
+                    {% if field.vars.name != '_token' %}
+                        <div>
+                            <label class="block text-sm font-medium mb-1" for="{{ field.vars.id }}">
+                                {{ field.vars.label ?? field.vars.name }}
+                            </label>
+
+                            {{ form_widget(field, {
+                                attr: {
+                                    class: 'w-full border border-gray-300 rounded-lg px-3 py-2'
+                                }
+                            }) }}
+
+                            <div class="text-sm text-red-600 mt-1">
+                                {{ form_errors(field) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                {{ form_rest(form) }}
+            </div>
+
+            <button type="submit"
+                    class="mt-6 w-full bg-black text-white py-2 rounded-lg hover:bg-gray-900 transition">
+                Enregistrer les modifications
             </button>
+
         {{ form_end(form) }}
+
+        <div class="mt-4 text-center text-sm text-gray-500">
+            <a href="{{ path('app_my_events') }}" class="underline hover:text-black">Retour à mes événements</a>
+        </div>
+
     </div>
+</div>
 {% endblock %}
