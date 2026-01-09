@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pop Up Spot{% endblock %}
+
+{% block body %}
+    <h1 class="text-3xl font-bold mb-4">Pop Up Spot</h1>
+    <p class="text-gray-700 mb-6">Trouve les prochains pop-up stores (validés) près de chez toi.</p>
+
+    <form method="get" class="border rounded bg-white p-4 mb-6 grid gap-3">
+        <input class="border rounded p-2" type="text" name="q" placeholder="Rechercher marque / description..."
+               value="{{ filters.q }}">
+
+        <div class="grid md:grid-cols-2 gap-3">
+            <input class="border rounded p-2" type="text" name="location" placeholder="Lieu (ville, code postal, région, pays)"
+                value="{{ filters.location }}">
+
+            <select class="border rounded p-2" name="period">
+                <option value="">Toutes les dates</option>
+                <option value="week"  {% if filters.period == 'week' %}selected{% endif %}>Cette semaine</option>
+                <option value="month" {% if filters.period == 'month' %}selected{% endif %}>Ce mois</option>
+                <option value="year"  {% if filters.period == 'year' %}selected{% endif %}>Cette année</option>
+            </select>
+        </div>
+
+
+        <div class="flex gap-3">
+            <button class="px-4 py-2 rounded bg-black text-white" type="submit">Rechercher</button>
+            <a class="px-4 py-2 rounded border" href="{{ path('app_home') }}">Réinitialiser</a>
+        </div>
+    </form>
+
+    {% for key, array in app.flashes %}
+        {% for message in array %}
+            <p class="mb-4 p-3 border rounded bg-white"><strong>{{ key|upper }}</strong> : {{ message }}</p>
+        {% endfor %}
+    {% endfor %}
+
+    {% if events is empty %}
+        <p class="text-gray-700">Aucun événement trouvé.</p>
+    {% else %}
+        <div class="grid gap-4">
+            {% for e in events %}
+                <div class="border rounded bg-white p-4 flex gap-4 items-start justify-between">
+                    <div class="flex-1">
+                        <a class="font-semibold text-lg hover:underline" href="{{ path('app_event_show', {id: e.id}) }}">
+                            {{ e.title }}
+                        </a>
+
+                        <p class="text-sm text-gray-600 mt-1">
+                            {{ e.city }} ({{ e.zipcode }}) — {{ e.region }} — {{ e.country }}
+                        </p>
+
+                        <p class="text-sm font-medium mt-1">
+                            {{ e.eventDate|date('d/m/Y H:i') }}
+                        </p>
+
+                        <p class="text-gray-700 mt-3">{{ e.description }}</p>
+
+                        <div class="flex flex-wrap gap-3 mt-4">
+                            {% if e.instagram %}
+                                <a class="px-4 py-2 rounded bg-black text-white"
+                                   target="_blank" href="{{ e.instagram }}">
+                                    Ouvrir Instagram
+                                </a>
+                            {% endif %}
+
+                            {% set mapsQuery = e.address ~ ', ' ~ e.zipcode ~ ' ' ~ e.city ~ ', ' ~ e.country %}
+                            <a class="px-4 py-2 rounded border"
+                               target="_blank"
+                               href="https://www.google.com/maps/search/?api=1&query={{ mapsQuery|url_encode }}">
+                                Itinéraire Google Maps
+                            </a>
+                        </div>
+                    </div>
+
+                    {% if e.image %}
+                        <img class="w-40 h-40 object-cover rounded border" src="{{ e.image }}" alt="Image événement">
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

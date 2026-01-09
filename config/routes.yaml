@@ -1,0 +1,102 @@
+controllers:
+    resource: ../src/Controller/
+    type: annotation
+
+kernel:
+    resource: ../src/Kernel.php
+    type: annotation
+
+app_home:
+  path: /
+  controller: App\Controller\HomeController::index
+
+app_mentions:
+  path: /mentions-legales
+  controller: App\Controller\PagesController::mentions
+
+app_cgu:
+  path: /cgu
+  controller: App\Controller\PagesController::cgu
+
+app_cgv:
+  path: /cgv
+  controller: App\Controller\PagesController::cgv
+
+app_privacy:
+  path: /politique-confidentialite
+  controller: App\Controller\PagesController::privacy
+
+app_about:
+  path: /qui-sommes-nous
+  controller: App\Controller\PagesController::about
+
+app_event_index:
+  path: /events
+  controller: App\Controller\EventController::index
+
+app_event_show:
+  path: /events/{id}
+  controller: App\Controller\EventController::show
+  requirements:
+    id: '\d+'
+
+app_event_new:
+  path: /events/new
+  controller: App\Controller\EventController::new
+
+app_admin_event_pending:
+  path: /admin/events/pending
+  controller: App\Controller\AdminEventController::pending
+
+app_admin_event_validate:
+  path: /admin/events/{id}/validate
+  controller: App\Controller\AdminEventController::validate
+  requirements:
+    id: '\d+'
+
+app_admin_event_delete:
+  path: /admin/events/{id}/delete
+  controller: App\Controller\AdminEventController::delete
+  requirements:
+    id: '\d+'
+
+app_profile:
+  path: /profile
+  controller: App\Controller\ProfileController::index
+
+app_profile_edit:
+  path: /profile/edit
+  controller: App\Controller\ProfileController::edit
+
+app_profile_delete:
+  path: /profile/delete
+  controller: App\Controller\ProfileController::delete
+
+app_my_events:
+  path: /my-events
+  controller: App\Controller\MyEventController::index
+
+app_my_event_edit:
+  path: /my-events/{id}/edit
+  controller: App\Controller\MyEventController::edit
+  requirements:
+    id: '\d+'
+
+app_my_event_delete:
+  path: /my-events/{id}/delete
+  controller: App\Controller\MyEventController::delete
+  requirements:
+    id: '\d+'
+
+app_contact:
+  path: /contact
+  controller: App\Controller\ContactController::index
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes événements - Pop Up Spot{% endblock %}
+
+{% block body %}
+    <h1 class="text-2xl font-bold mb-4">Mes événements</h1>
+
+    {% for key, array in app.flashes %}
+        {% for message in array %}
+            <p class="mb-4 p-3 border rounded bg-white"><strong>{{ key|upper }}</strong> : {{ message }}</p>
+        {% endfor %}
+    {% endfor %}
+
+    {% if events is empty %}
+        <p>Aucun événement pour le moment.</p>
+        <a class="inline-block mt-4 px-4 py-2 rounded bg-black text-white" href="{{ path('app_event_new') }}">
+            Poster un événement
+        </a>
+    {% else %}
+        <div class="grid gap-4">
+            {% for e in events %}
+                <div class="border rounded bg-white p-4 flex items-start justify-between gap-4">
+                    <div>
+                        <p class="font-semibold">{{ e.title }}</p>
+                        <p class="text-sm text-gray-600">
+                            {{ e.city }} ({{ e.zipcode }}) — {{ e.region }} — {{ e.country }}
+                        </p>
+                        <p class="text-sm text-gray-600">
+                            {{ e.eventDate|date('d/m/Y H:i') }}
+                        </p>
+
+                        {% if e.isValidated %}
+                            <p class="mt-2 text-sm"><strong>Statut :</strong> ✅ Validé</p>
+                        {% else %}
+                            <p class="mt-2 text-sm"><strong>Statut :</strong> ⏳ En attente de validation</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <a class="px-4 py-2 rounded bg-black text-white text-center"
+                           href="{{ path('app_my_event_edit', {id: e.id}) }}">
+                            Modifier
+                        </a>
+
+                        <a class="px-4 py-2 rounded border text-center text-red-700"
+                           href="{{ path('app_my_event_delete', {id: e.id}) }}"
+                           onclick="return confirm('Supprimer cet événement ?');">
+                            Supprimer
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

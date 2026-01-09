@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Pop Up Spot{% endblock %}</title>
+
+    {% block stylesheets %}
+        <script src="https://cdn.tailwindcss.com"></script>
+    {% endblock %}
+</head>
+
+<body class="min-h-screen">
+    <nav class="flex gap-6 items-center p-4 border-b">
+        <a class="font-bold" href="{{ path('app_home') }}">Pop Up Spot</a>
+
+        <a href="{{ path('app_home') }}">Accueil</a>
+        <a class="hover:underline" href="{{ path('app_event_index') }}">Événements</a>
+
+
+        <div class="ml-auto flex gap-4">
+            {% if app.user %}
+                <a class="hover:underline" href="{{ path('app_profile') }}">Profil</a>
+                <a class="hover:underline" href="{{ path('app_logout') }}">Déconnexion</a>
+            {% else %}
+                <a class="hover:underline" href="{{ path('app_login') }}">Connexion</a>
+                <a class="hover:underline" href="{{ path('app_register') }}">Inscription</a>
+            {% endif %}
+        </div>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="hover:underline" href="{{ path('app_admin_event_pending') }}">Admin</a>
+        {% endif %}
+
+
+
+    </nav>
+
+    <main class="p-6">
+        {% block body %}{% endblock %}
+    </main>
+</body>
+
+<footer class="mt-10 border-t pt-6 text-sm flex flex-wrap gap-4">
+  <a class="underline" href="{{ path('app_mentions') }}">Mentions légales</a>
+  <a class="underline" href="{{ path('app_cgu') }}">CGU</a>
+  <a class="underline" href="{{ path('app_cgv') }}">CGV</a>
+  <a class="underline" href="{{ path('app_privacy') }}">Confidentialité</a>
+  <a class="underline" href="{{ path('app_about') }}">Qui sommes-nous ?</a>
+  <a class="hover:underline" href="{{ path('app_contact') }}">Contact</a>
+</footer>
+
+</html>
