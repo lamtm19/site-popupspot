@@ -1,23 +1,93 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription - Pop Up Spot{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+<div class="min-h-screen flex items-center justify-center bg-white">
+    <div class="w-full max-w-md border border-gray-200 rounded-xl p-8 shadow-sm">
 
-    <h1>Register</h1>
+        <h1 class="text-2xl font-semibold text-center mb-6">Créer un compte</h1>
 
-    {{ form_errors(registrationForm) }}
+        {# erreurs globales (ex: email déjà utilisé) #}
+        {{ form_start(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            {% if form_errors(registrationForm) %}
+                <div class="mb-4 text-sm text-red-600 text-center">
+                    {{ form_errors(registrationForm) }}
+                </div>
+            {% endif %}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            <div class="space-y-4">
+                {# PSEUDO #}
+                <div>
+                    <label class="block text-sm font-medium mb-1" for="{{ registrationForm.pseudo.vars.id }}">
+                        Pseudo
+                    </label>
+                    {{ form_widget(registrationForm.pseudo, {
+                        attr: { class: 'w-full border border-gray-300 rounded-lg px-3 py-2' }
+                    }) }}
+                    <div class="text-sm text-red-600 mt-1">
+                        {{ form_errors(registrationForm.pseudo) }}
+                    </div>
+                </div>
+
+                {# EMAIL #}
+                <div>
+                    <label class="block text-sm font-medium mb-1" for="{{ registrationForm.email.vars.id }}">
+                        Email
+                    </label>
+                    {{ form_widget(registrationForm.email, {
+                        attr: { class: 'w-full border border-gray-300 rounded-lg px-3 py-2' }
+                    }) }}
+                    <div class="text-sm text-red-600 mt-1">
+                        {{ form_errors(registrationForm.email) }}
+                    </div>
+                </div>
+
+                {# PASSWORD #}
+                <div>
+                    <label class="block text-sm font-medium mb-1" for="{{ registrationForm.plainPassword.vars.id }}">
+                        Mot de passe
+                    </label>
+                    {{ form_widget(registrationForm.plainPassword, {
+                        attr: { class: 'w-full border border-gray-300 rounded-lg px-3 py-2' }
+                    }) }}
+                    <div class="text-sm text-red-600 mt-1">
+                        {{ form_errors(registrationForm.plainPassword) }}
+                    </div>
+                </div>
+
+                {# PHOTO (si existe) #}
+                {% if registrationForm.photo is defined %}
+                    <div>
+                        <label class="block text-sm font-medium mb-1" for="{{ registrationForm.photo.vars.id }}">
+                            Photo (URL)
+                        </label>
+                        {{ form_widget(registrationForm.photo, {
+                            attr: { class: 'w-full border border-gray-300 rounded-lg px-3 py-2' }
+                        }) }}
+                        <div class="text-sm text-red-600 mt-1">
+                            {{ form_errors(registrationForm.photo) }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {# champs cachés (CSRF etc.) #}
+                {{ form_rest(registrationForm) }}
+            </div>
+
+            <button type="submit"
+                    class="mt-6 w-full bg-black text-white py-2 rounded-lg hover:bg-gray-900 transition">
+                S’inscrire
+            </button>
+
+        {{ form_end(registrationForm) }}
+
+        <p class="mt-4 text-center text-sm text-gray-500">
+            Déjà un compte ?
+            <a href="{{ path('app_login') }}" class="underline hover:text-black">Se connecter</a>
+        </p>
+
+    </div>
+</div>
 {% endblock %}
