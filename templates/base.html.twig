@@ -40,13 +40,16 @@
     </main>
 </body>
 
-<footer class="bg-gray-900 text-gray-300 text-sm text-center py-4">
-  <a class="hover:underline" href="{{ path('app_mentions') }}">Mentions légales</a>
-  <a class="hover:underline" href="{{ path('app_cgu') }}">CGU</a>
-  <a class="hover:underline" href="{{ path('app_cgv') }}">CGV</a>
-  <a class="hover:underline" href="{{ path('app_privacy') }}">Confidentialité</a>
-  <a class="hover:underline" href="{{ path('app_about') }}">Qui sommes-nous ?</a>
-  <a class="hover:underline" href="{{ path('app_contact') }}">Contact</a>
+<footer class="bg-black text-gray-400 text-sm text-center py-6">
+    <div class="flex justify-center flex-wrap gap-5">
+        <a class="hover:underline hover:text-white" href="{{ path('app_mentions') }}">Mentions légales</a>
+        <a class="hover:underline hover:text-white" href="{{ path('app_cgu') }}">CGU</a>
+        <a class="hover:underline hover:text-white" href="{{ path('app_cgv') }}">CGV</a>
+        <a class="hover:underline hover:text-white" href="{{ path('app_privacy') }}">Confidentialité</a>
+        <a class="hover:underline hover:text-white" href="{{ path('app_about') }}">Qui sommes-nous ?</a>
+        <a class="hover:underline hover:text-white" href="{{ path('app_contact') }}">Contact</a>
+    </div>
 </footer>
+
 
 </html>
